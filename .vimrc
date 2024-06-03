@@ -1,16 +1,27 @@
+set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
+set termencoding=utf-8
+set encoding=utf-8
+set fileencoding=utf-8
 " tab 相关
 set ts=4
 set sw=4
 set sts=4
 set tw=80
 set re=0
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set hls
+set autoindent
+set smarttab
 
 set autochdir
-set autoindent
 set autoread
 set autowrite
 set noswapfile
 set nowritebackup
+set nowrapscan
 set foldmethod=manual
 set foldtext=gitgutter#fold#foldtext()
 filetype indent on "根据文件类型进行缩进"
@@ -25,10 +36,10 @@ set guifont=FiraCode
 set incsearch
 set updatetime=100
 set signcolumn=auto
+set undofile
+set undodir=~/.vim/undodir
 
-set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
-set enc=utf-8
-set fencs=utf-8,gbk,gb2312,gb18030
+
 " set fileencodings=ucs-bom,utf-8,utf-16,gbk,big5,gb18030,latin1
 
 set nocompatible
@@ -40,10 +51,9 @@ set statusline+=%{gutentags#statusline()}
 command! -bang -nargs=* Rg2
   \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir': system('git rev-parse --show-toplevel 2> /dev/null')[:-2]}), <bang>0)
 let g:airline#extensions#tabline#enabled = 1
-let g:lightline = {'colorscheme' : 'tokyonight'}
 let g:airline_theme = "tokyonight"
 
-let g:rbpt_colorpairs= [
+let g:rbpt_colorpairs = [
             \ ['brown',       'RoyalBlue3'],
             \ ['Darkblue',    'SeaGreen3'],
             \ ['darkgray',    'DarkOrchid3'],
@@ -70,52 +80,53 @@ let g:rbpt_loadcmd_toggle = 0
 " let g:Lf_WorkingDirectoryMode = 'Ac'  "搜索时显示相对目录
 " let g:Lf_WindowHeight = 0.30      "搜索窗口高度
 " let g:Lf_CacheDirectory = expand('~/.vim/cache')  "LeaderF会自动管理GTAGS，自动生成的cache存放目录
-" let g:Lf_ShowRelativePath = 0
+" let g:Lf_ShowRelativePath = 0      
 " let g:Lf_HideHelp = 1      "隐藏帮助窗口
 " let g:Lf_GtagsAutoGenerate = 1   "自动生成GTAGS文件
 " 自动作者信息
 "
 augroup author
-    autocmd BufNewFile *.cpp,*.h,*.c,*.go,*.php exec ":call SetTitle()"
+	autocmd BufNewFile *.cpp,*.h,*.c,*.go,*.php exec ":call SetTitle()"
 augroup end
 
 func SetTitle()
-    if &filetype == 'php'
-        call setline(1,"/**")
-        call append(line("."), "* File Name: ".expand("%"))
-        call append(line(".")+1, "* ")
-        call append(line(".")+2, "* @author ")
-        call append(line(".")+3, "* @date ".strftime("%Y-%m-%d"))
-        call append(line(".")+4, "**/")
-    endif
-    if &filetype == 'go'
-        call append(line("."), "\// Package ...")
-        call append(line(".")+1, "\// @Description ")
-        call append(line(".")+2, "\// @Author ")
-        call append(line(".")+3, "\// @Date ".strftime("%Y-%m-%d"))
-    endif
-    if &filetype == 'cpp'
-        call setline(1,"/**")
-        call append(line("."), "* @file ".expand("%"))
-        call append(line(".")+1, "* @author ")
-        call append(line(".")+2, "* @date ".strftime("%Y-%m-%d"))
-        call append(line(".")+3, "**/")
-    endif
-    if &filetype == 'c'
-        call setline(1,"/**")
-        call append(line("."), "* @file ".expand("%"))
-        call append(line(".")+1, "* @author ")
-        call append(line(".")+2, "* @date ".strftime("%Y-%m-%d"))
-        call append(line(".")+3, "**/")
-    endif
-    if &filetype == 'h'
-        call setline(1,"/**")
-        call append(line("."), "* @file ".expand("%"))
-        call append(line(".")+1, "* @author ")
-        call append(line(".")+2, "* @date ".strftime("%Y-%m-%d"))
-        call append(line(".")+3, "**/")
-    endif
+	if &filetype == 'php'
+		call setline(1,"/**")
+		call append(line("."), "* File Name: ".expand("%"))
+		call append(line(".")+1, "* ")
+		call append(line(".")+2, "* @author guohaoran(@baidu.com)")
+		call append(line(".")+3, "* @date ".strftime("%Y-%m-%d"))
+		call append(line(".")+4, "**/")
+	endif
+	if &filetype == 'go'
+		call append(line("."), "\// Package ...")
+		call append(line(".")+1, "\// @Description ")
+		call append(line(".")+2, "\// @Author guohaoran@baidu.com")
+		call append(line(".")+3, "\// @Date ".strftime("%Y-%m-%d"))
+	endif
+	if &filetype == 'cpp'
+		call setline(1,"/**")
+		call append(line("."), "* @file ".expand("%"))
+		call append(line(".")+1, "* @author guohaoran(@baidu.com)")
+		call append(line(".")+2, "* @date ".strftime("%Y-%m-%d"))
+		call append(line(".")+3, "**/")
+	endif
+	if &filetype == 'c'
+		call setline(1,"/**")
+		call append(line("."), "* @file ".expand("%"))
+		call append(line(".")+1, "* @author guohaoran(@baidu.com)")
+		call append(line(".")+2, "* @date ".strftime("%Y-%m-%d"))
+		call append(line(".")+3, "**/")
+	endif
+	if &filetype == 'h'
+		call setline(1,"/**")
+		call append(line("."), "* @file ".expand("%"))
+		call append(line(".")+1, "* @author guohaoran(@baidu.com)")
+		call append(line(".")+2, "* @date ".strftime("%Y-%m-%d"))
+		call append(line(".")+3, "**/")
+	endif
 endfunc
+
 " 快捷键映射
 nnoremap <space> <Nop>
 let mapleader = " "
@@ -126,13 +137,14 @@ nnoremap <F12> :RainbowParenthesesToggle<cr>:RainbowParenthesesLoadBraces<cr>
 tnoremap jk <esc>
 cnoremap jk <esc>
 inoremap jk <esc>
-tnoremap <Esc> <C-w>N
+
+" tnoremap <Esc> <C-w>N
 nnoremap <c-h> :bp<cr>
 nnoremap <c-l> :bn<cr>
 " coc 配置
 function! CheckBackspace() abort
-    let col = col('.') -1
-    return !col || getline('.')[col - 1] =~# '\s'
+	let col = col('.') -1
+	return !col || getline('.')[col - 1] =~# '\s'
 endfunction
 inoremap <silent><expr> <TAB>
       \ coc#pum#visible() ? coc#pum#next(1) :
@@ -157,6 +169,8 @@ nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call ShowDocumentation()<CR>
+nnoremap <silent> <leader>0 :call AddWorkspaceFolder()<CR>
+nnoremap <silent> <leader>1 :call AddWorkspaceFolder1()<CR>
 
 function! ShowDocumentation()
   if CocAction('hasProvider', 'hover')
@@ -166,11 +180,22 @@ function! ShowDocumentation()
   endif
 endfunction
 
+function! AddWorkspaceFolder()
+    call CocAction('addWorkspaceFolder','/home/work/yong/yc')
+    execute 'CocCommand intelephense.index.workspace'
+endfunction
+
+function! AddWorkspaceFolder1()
+    call CocAction('addWorkspaceFolder','/home/work/code/baidu/map-bus-kuaixing')
+    execute 'CocCommand intelephense.index.workspace'
+endfunction
+
 " Highlight the symbol and its references when holding the cursor
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming
 nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>rf <Plug>(coc-refactor)
 
 " Formatting selected code
 xmap <leader>f  <Plug>(coc-format-selected)
@@ -209,11 +234,15 @@ Plug 'airblade/vim-gitgutter'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'skywind3000/gutentags_plus'
 " Plug 'Yggdroot/LeaderF'
+Plug 'goerz/jupytext.vim'
+
+
 
 call plug#end()
 
 let g:gotests_bin = '/home/work/go/bin/gotests'
 
+let g:go_debug = ['dlv']
 let g:go_auto_type_info = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_methods = 1
@@ -229,6 +258,7 @@ let g:go_highlight_fields = 1
 let g:go_highlight_string_spellcheck = 1
 let g:go_highlight_format_strings = 1
 let g:go_highlight_variable_declarations = 0
+
 let g:cpp_class_decl_highlight=1
 let g:cpp_class_scope_highlight = 1
 let g:cpp_concepts_highlight = 1
@@ -268,7 +298,7 @@ let g:solarized_termcolors=256
 let g:solarized_termtrans = 1
 let g:tokyonight_style = 'storm' " available: night, storm
 let g:tokyonight_enable_italic = 1
-let g:tokyonight_transparent_background = 1
+let g:tokyonight_transparent_background = 1 
 
 " let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'relative': v:true, 'yoffset': 1.0 } }
 let g:gutentags_enabled = 1
@@ -290,9 +320,13 @@ let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 " 禁用 gutentags 自动加载 gtags 数据库的行为
 let g:gutentags_auto_add_gtags_cscope = 0
 
-" colorscheme habamax
-" let g:airline_theme='base16'
 colorscheme tokyonight
+let g:lightline = {'colorscheme' : 'tokyonight'}
+let g:airline_theme = "tokyonight"
+" colorscheme solarized
+" let g:lightline = {'colorscheme':'solarized'}
+" let g:airline_theme = "solarized"
+" set background=light
 
 let g:NERDSpaceDelims = 1
 let g:gitgutter_set_sign_backgrounds = 1
